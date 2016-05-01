@@ -160,4 +160,11 @@ public class Process{
      */
     public static Comparator<Process> priorityValue = (Process p1 , Process p2) -> p2.getPriority() - p1.getPriority();
     
+    /**
+     * This is used when there is no process ready to execute.
+     * Then a time unit will go without executing any process.
+     */
+    public static void incrementExecutionTime(){
+        totalExecutionTime++;
+    }
 }

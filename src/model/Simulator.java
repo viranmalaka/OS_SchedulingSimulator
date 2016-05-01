@@ -23,6 +23,7 @@ public class Simulator {
     private final int startingDeadlinePriority;
     private final int timeQuantum;
     private String currentlyExecutingPID;
+    private boolean doneExecuting;
 
     public Simulator(int finishingDeadlinePriority, int startingDeadlinePriority, int timeQuantum) {
         this.finishingDeadlinePriority = finishingDeadlinePriority;
@@ -30,6 +31,7 @@ public class Simulator {
         processList = new ArrayList<>();
         activeProcessList = new ArrayList<>();
         this.timeQuantum = timeQuantum;
+        doneExecuting = false;
     }
     
     
@@ -42,9 +44,14 @@ public class Simulator {
     
     public void updateProcessState(){
         
+        doneExecuting = true;
+        
         for (Process temp : processList) {
             if((!activeProcessList.contains(temp)) && (temp.getReadyTime() <= Process.getTotalExecutionTime())){
                 activeProcessList.add(temp);
+            }
+            if(!temp.isFinished()){
+                doneExecuting = false;
             }
         }
 
@@ -75,18 +82,25 @@ public class Simulator {
     public boolean executeNextProcess(){        
         updateProcessState();
         
-        if (activeProcessList.isEmpty())
+        if (!doneExecuting){
             return false;
+        }
         
         // Sort by priority value
         Collections.sort(activeProcessList, Process.priorityValue);
         
+        if (activeProcessList.isEmpty()){
+            Process.incrementExecutionTime();
+            currentlyExecutingPID = "none";
+            lastExecuted = null;
+        }else{
         // Now execute the process
         activeProcessList.get(0).execute(timeQuantum);
         // Set currentlyExecuting processID
         currentlyExecutingPID = activeProcessList.get(0).getProcessId();
         // For testing
         lastExecuted = activeProcessList.get(0);
+        }
         return true;
     }
 
