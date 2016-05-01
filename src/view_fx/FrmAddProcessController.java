@@ -16,7 +16,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -97,29 +99,33 @@ public class FrmAddProcessController implements Initializable {
 
     public void btnAdd_Click() {
         ArrayList<Object> arr = new ArrayList<>();
-        arr.add(txtProcessID.getText());
-        arr.add(txtProcessName.getText());
-        arr.add(Integer.parseInt(txtCPUBTime.getText()));
-        arr.add(Integer.parseInt(txtStartingDeadline.getText()));
-        arr.add(Integer.parseInt(txtFinishingDeadline.getText()));
-        arr.add(Integer.parseInt(txtArrivalTime.getText()));
-        arr.add(cmbColor.getValue());
-
-        processDetails.add(arr);
-        data.add(new TableRowData((String) arr.get(0), (String) arr.get(1),
-                ((Color) arr.get(6)).getRed(),
-                ((Color) arr.get(6)).getGreen(),
-                ((Color) arr.get(6)).getBlue(),
-                ((Color) arr.get(6)).getOpacity())
-        );
-        
-        tblProcess.setItems(data);
-        txtProcessID.setText((processDetails.size()+1) + "p");
-        txtArrivalTime.setText("");
-        txtCPUBTime.setText("");
-        txtFinishingDeadline.setText("");
-        txtProcessName.setText("");
-        txtStartingDeadline.setText("");
+        try {
+            arr.add(txtProcessID.getText());
+            arr.add(txtProcessName.getText());
+            arr.add(Integer.parseInt(txtCPUBTime.getText()));
+            arr.add(Integer.parseInt(txtStartingDeadline.getText()));
+            arr.add(Integer.parseInt(txtFinishingDeadline.getText()));
+            arr.add(Integer.parseInt(txtArrivalTime.getText()));
+            arr.add(cmbColor.getValue());
+            
+            processDetails.add(arr);
+            data.add(new TableRowData((String) arr.get(0), (String) arr.get(1),
+                    ((Color) arr.get(6)).getRed(),
+                    ((Color) arr.get(6)).getGreen(),
+                    ((Color) arr.get(6)).getBlue(),
+                    ((Color) arr.get(6)).getOpacity())
+            );
+            
+            tblProcess.setItems(data);
+            txtProcessID.setText((processDetails.size() + 1) + "p");
+            txtArrivalTime.setText("");
+            txtCPUBTime.setText("");
+            txtFinishingDeadline.setText("");
+            txtProcessName.setText("");
+            txtStartingDeadline.setText("");
+        } catch (NumberFormatException n) {
+            new Alert(Alert.AlertType.ERROR, "Invalid Number Inputs", ButtonType.OK).showAndWait();
+        }
     }
 
     public void btnCancle_Click() {
