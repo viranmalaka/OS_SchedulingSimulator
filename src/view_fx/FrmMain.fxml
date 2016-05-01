@@ -20,7 +20,7 @@
             <Pane fx:id="lblPane" prefHeight="94.0" prefWidth="370.0">
                <children>
                   <Line endX="46.0" layoutX="17.0" layoutY="43.0" rotate="90.0" startX="-28.0" />
-                  <Line endX="157.0" layoutX="127.0" layoutY="67.0" startX="-100.0" />
+                  <Line fx:id="lineX" endX="200.0" layoutX="127.0" layoutY="67.0" startX="-100.0" />
                </children>
             </Pane>
          </content>
