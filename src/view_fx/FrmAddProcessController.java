@@ -18,14 +18,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -62,10 +60,8 @@ public class FrmAddProcessController implements Initializable {
     private TableColumn clmID;
     @FXML
     private TableColumn clmName;
-    @FXML 
-    private TableColumn clmColor;
 
-    private static ArrayList<ArrayList<Object>> processDetails = new ArrayList();
+    private static ArrayList<ArrayList<Object>> processDetails ;
     private static ObservableList<TableRowData> data = FXCollections.observableArrayList();
     private static Stage stage;
 
@@ -81,6 +77,7 @@ public class FrmAddProcessController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        processDetails = new ArrayList();
         clmID.setCellValueFactory(new PropertyValueFactory<TableRowData,String>("id"));
         clmName.setCellValueFactory(new PropertyValueFactory<TableRowData,String>("Name"));
         txtProcessID.setText((processDetails.size()+1) + "p");
@@ -92,6 +89,7 @@ public class FrmAddProcessController implements Initializable {
         stage = new Stage();
         stage.setScene(new Scene(FXMLLoader.load(FrmAddProcessController.class.getResource("FrmAddProcess.fxml"))));
         stage.setTitle("Add Process");
+        stage.sizeToScene();
         stage.showAndWait();
         
         return processDetails;
@@ -108,7 +106,6 @@ public class FrmAddProcessController implements Initializable {
         arr.add(cmbColor.getValue());
 
         processDetails.add(arr);
-        System.out.println(Arrays.toString(arr.toArray()));
         data.add(new TableRowData((String) arr.get(0), (String) arr.get(1),
                 ((Color) arr.get(6)).getRed(),
                 ((Color) arr.get(6)).getGreen(),
@@ -136,4 +133,6 @@ public class FrmAddProcessController implements Initializable {
     public void btnOK_Click() {
         stage.close();
     }
+    
+   
 }
