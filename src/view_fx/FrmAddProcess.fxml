@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -13,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="457.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view_fx.FrmAddProcessController">
+<AnchorPane prefHeight="457.0" prefWidth="523.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view_fx.FrmAddProcessController">
    <children>
       <GridPane hgap="10.0" layoutX="21.0" layoutY="95.0" prefHeight="247.0" prefWidth="272.0">
          <columnConstraints>
@@ -46,21 +45,20 @@
             <ColorPicker fx:id="cmbColor" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
          </children>
       </GridPane>
-      <Label layoutX="201.0" layoutY="23.0" prefHeight="40.0" prefWidth="216.0" text="Add Process" textAlignment="CENTER" textFill="#030303">
+      <Label layoutX="163.0" layoutY="23.0" prefHeight="40.0" prefWidth="216.0" text="Add Process" textAlignment="CENTER" textFill="#030303">
          <font>
             <Font size="34.0" />
          </font>
       </Label>
-      <TableView fx:id="tblProcess" layoutX="309.0" layoutY="95.0" prefHeight="247.0" prefWidth="263.0">
+      <TableView fx:id="tblProcess" layoutX="309.0" layoutY="95.0" prefHeight="247.0" prefWidth="189.0">
         <columns>
           <TableColumn fx:id="clmID" editable="false" prefWidth="83.0" text="ID" />
-            <TableColumn fx:id="clmName" prefWidth="96.0" text="Name" />
-            <TableColumn fx:id="clmColor" prefWidth="83.0" text="Color" />
+            <TableColumn fx:id="clmName" prefWidth="104.0" text="Name" />
         </columns>
       </TableView>
-      <Button fx:id="btnAdd" layoutX="411.0" layoutY="355.0" mnemonicParsing="false" onAction="#btnAdd_Click" prefHeight="25.0" prefWidth="77.0" text="Add" />
-      <Button fx:id="btnRemove" layoutX="493.0" layoutY="355.0" mnemonicParsing="false" onAction="#btnRemove_Click" prefHeight="25.0" prefWidth="77.0" text="Remove" />
-      <Button fx:id="btnOK" layoutX="493.0" layoutY="418.0" mnemonicParsing="false" onAction="#btnOK_Click" prefHeight="25.0" prefWidth="77.0" text="OK" />
-      <Button fx:id="btnCancle" layoutX="411.0" layoutY="418.0" mnemonicParsing="false" onAction="#btnCancle_Click" prefHeight="25.0" prefWidth="77.0" text="Cancle" />
+      <Button fx:id="btnAdd" layoutX="312.0" layoutY="355.0" mnemonicParsing="false" onAction="#btnAdd_Click" prefHeight="25.0" prefWidth="77.0" text="Add" />
+      <Button fx:id="btnRemove" layoutX="416.0" layoutY="357.0" mnemonicParsing="false" onAction="#btnRemove_Click" prefHeight="25.0" prefWidth="77.0" text="Remove" />
+      <Button fx:id="btnOK" layoutX="414.0" layoutY="401.0" mnemonicParsing="false" onAction="#btnOK_Click" prefHeight="25.0" prefWidth="77.0" text="OK" />
+      <Button fx:id="btnCancle" layoutX="312.0" layoutY="401.0" mnemonicParsing="false" onAction="#btnCancle_Click" prefHeight="25.0" prefWidth="77.0" text="Cancle" />
    </children>
 </AnchorPane>
