@@ -97,6 +97,10 @@ public class Simulator {
     public ArrayList<Process> getActiveProcessList() {
         return activeProcessList;
     }
+
+    public ArrayList<Process> getProcessList() {
+        return processList;
+    }
     
     
 }

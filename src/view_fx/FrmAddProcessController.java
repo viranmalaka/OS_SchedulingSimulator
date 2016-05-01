@@ -18,14 +18,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -62,8 +60,6 @@ public class FrmAddProcessController implements Initializable {
     private TableColumn clmID;
     @FXML
     private TableColumn clmName;
-    @FXML 
-    private TableColumn clmColor;
 
     private static ArrayList<ArrayList<Object>> processDetails = new ArrayList();
     private static ObservableList<TableRowData> data = FXCollections.observableArrayList();
@@ -136,4 +132,6 @@ public class FrmAddProcessController implements Initializable {
     public void btnOK_Click() {
         stage.close();
     }
+    
+   
 }
