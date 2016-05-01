@@ -103,6 +103,9 @@ public class FrmMainController extends Application implements Initializable {
 
         processColors = new HashMap<>();
         processNames = new HashMap<>();
+        
+        processColors.put("none", Color.TRANSPARENT);
+        processNames.put("none", "Idle");
     }
 
     @FXML
@@ -178,9 +181,18 @@ public class FrmMainController extends Application implements Initializable {
                 }
                 while (simulator.executeNextProcess()) {
                     String id = simulator.getCurrentlyExecutingPID();
-                    int ld = simulator.getActiveProcessList().get(0).getLastExecutedDuration();
-                    int remain = getProcess(id).getRemainingTime();
-                    int finished = getProcess(id).getExecutingTime() - remain;
+                    int ld = 0;
+                    int remain = 0;
+                    int finished = 0;
+                    if (!id.equals("none")) {
+                        ld = simulator.getActiveProcessList().get(0).getLastExecutedDuration();
+                        remain = getProcess(id).getRemainingTime();
+                        finished = getProcess(id).getExecutingTime() - remain;
+                    }else{
+                        ld = 1;
+                        remain = 0;
+                        finished = 0;
+                    }
                     gChart.add(new processDetails(id, ld, remain, finished));
                 }
                 clearProcess();
