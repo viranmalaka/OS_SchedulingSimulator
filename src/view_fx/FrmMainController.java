@@ -23,10 +23,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import model.Simulator;
 
@@ -35,30 +38,32 @@ import model.Simulator;
  *
  * @author malaka
  */
-public class FrmMainController  extends Application implements Initializable {
+public class FrmMainController extends Application implements Initializable {
 
     /**
      * Initializes the controller class.
      */
     @FXML
     private Pane lblPane;
-    @FXML private TextField txtSDP;
-    @FXML private TextField txtFDP;
-    @FXML private TextField txtTQ;
-    
-    
-    
-    
+    @FXML
+    private TextField txtSDP;
+    @FXML
+    private TextField txtFDP;
+    @FXML
+    private TextField txtTQ;
+    @FXML
+    private Line lineX;
+
     private ArrayList<ArrayList<Object>> processData;
-    private Map<String,Color> processColors;
-    private Map<String,String> processNames;
+    private Map<String, Color> processColors;
+    private Map<String, String> processNames;
     private Simulator simulator;
     private ArrayList<processDetails> gChart = new ArrayList<>();
 
     int currentID;
-    int currentX = 27;
-    
-    
+    int currentX = 28;
+    int currentTime = 0;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         processColors = new HashMap<>();
@@ -66,25 +71,43 @@ public class FrmMainController  extends Application implements Initializable {
     }
 
     @FXML
-    public void showFrmAddProcess() throws IOException{
-       // processData = FrmAddProcessController.show();
-        processData= new ArrayList<>();
+    public void showFrmAddProcess() throws IOException {
+        // processData = FrmAddProcessController.show();
+        processData = new ArrayList<>();
         //[1p, pro1, 20, 0, 40, 0, 0xff0000ff], [2p, pro2, 10, 0, 10, 1, 0x00ff00ff], 
         //[3p, pro3, 5, 0, 10, 3, 0x0004ffff]]
         ArrayList a = new ArrayList();
-        a.add("1p");a.add("pro1");a.add(20);a.add(0);a.add(40);a.add(0);a.add(Color.RED);
+        a.add("1p");
+        a.add("pro1");
+        a.add(20);
+        a.add(0);
+        a.add(40);
+        a.add(0);
+        a.add(Color.RED);
         ArrayList b = new ArrayList();
-        b.add("2p");b.add("pro2");b.add(10);b.add(0);b.add(10);b.add(1);b.add(Color.BLUE);
+        b.add("2p");
+        b.add("pro2");
+        b.add(10);
+        b.add(0);
+        b.add(10);
+        b.add(1);
+        b.add(Color.BLUE);
         ArrayList c = new ArrayList();
-        c.add("3p");c.add("pro3");c.add(5);c.add(0);c.add(10);c.add(3);c.add(Color.GREEN);
+        c.add("3p");
+        c.add("pro3");
+        c.add(5);
+        c.add(0);
+        c.add(10);
+        c.add(3);
+        c.add(Color.GREEN);
         processData.add(a);
         processData.add(b);
         processData.add(c);
-        
+
         System.out.println(Arrays.toString(processData.toArray()));
     }
 
-    public void show(){
+    public void show() {
         Stage stage = new Stage();
         stage.setTitle("Process Simulator");
         try {
@@ -95,20 +118,18 @@ public class FrmMainController  extends Application implements Initializable {
             Logger.getLogger(FrmMainController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void btnRun_Click(){
+
+    public void btnRun_Click() {
         int sdp = Integer.parseInt(txtSDP.getText());
         int fdp = Integer.parseInt(txtFDP.getText());
         int tq = Integer.parseInt(txtTQ.getText());
-       
-        
-        
-        simulator = new Simulator(fdp,sdp,tq);
-        
+
+        simulator = new Simulator(fdp, sdp, tq);
+
         for (ArrayList<Object> process : processData) {
-            simulator.addProcess((String)process.get(1), (int)process.get(3), (int)process.get(4), (int) process.get(2), (int) process.get(5));
-            processColors.put((String)process.get(0), (Color)process.get(6));
-            processNames.put((String)process.get(0) ,(String) process.get(1));
+            simulator.addProcess((String) process.get(1), (int) process.get(3), (int) process.get(4), (int) process.get(2), (int) process.get(5));
+            processColors.put((String) process.get(0), (Color) process.get(6));
+            processNames.put((String) process.get(0), (String) process.get(1));
         }
         while (simulator.executeNextProcess()) {
             String id = simulator.getCurrentlyExecutingPID();
@@ -117,28 +138,44 @@ public class FrmMainController  extends Application implements Initializable {
             System.out.println(id + " " + ld);
         }
     }
-   
-    
-    public void btnForward_Click(){
+
+    public void btnForward_Click() {
         if (gChart.size() > currentID) {
             processDetails get = gChart.get(currentID);
+
             
-            final Rectangle r = new Rectangle(currentX, 10, get.getDuration() * 20, 40);
+            //add the Rectangle
+            final Rectangle r = new Rectangle(currentX, 25, get.getDuration() * 19, 40);
             Color c = processColors.get(get.getPid());
-            String cs = "rgb("+c.getRed() * 255 +","+c.getGreen()* 255 +","+c.getBlue()* 255 +");"; 
-            r.setStyle("-fx-fill:" + cs );
-            
-            //r.setFill(processColors.get(get.getPid()));
-            r.setArcHeight(6);
-            r.setArcWidth(6);
+            String cs = "rgb(" + c.getRed() * 255 + "," + c.getGreen() * 255 + "," + c.getBlue() * 255 + ");";
+            r.setStyle("-fx-fill:" + cs);
+            r.setArcHeight(10);
+            r.setArcWidth(10);
             lblPane.getChildren().add(r);
+            
+            
             currentID++;
+            //set the Pane with and increase x-axis length
             currentX += get.getDuration() * 20;
             
-            lblPane.setPrefWidth(currentX + 20);
+            currentTime += get.getDuration();
+            //add the lable to x axis
+            final Label l = new Label(currentTime+"");
+            l.setTextAlignment(TextAlignment.RIGHT);
+            l.setRotate(-90);
+            l.setLayoutY(70);
+            l.setLayoutX(currentX - 5);
+            lblPane.getChildren().add(l);
+            
+            if (currentX > 350) {
+                lblPane.setPrefWidth(currentX + 20);
+            }
+            if (currentX > 260) {
+                lineX.setEndX(lineX.getEndX() + get.getDuration()*20);
+            }
         }
     }
-    
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -149,8 +186,8 @@ public class FrmMainController  extends Application implements Initializable {
     }
 }
 
+class processDetails {
 
-class processDetails{
     private String pid;
     private int duration;
 
