@@ -215,39 +215,42 @@ public class FrmMainController extends Application implements Initializable {
     private void addSimulatorGraphics() {
         processDetails get = gChart.get(currentID);
 
-        //add the Rectangle
-        final Rectangle r = new Rectangle(currentX, 25, get.getDuration() * 20 - 1, 40);
-        Color c = processColors.get(get.getPid());
-        String cs1 = "rgb(" + c.getRed() * 255 + "," + c.getGreen() * 255 + "," + c.getBlue() * 255 + ")";
-        String cs2 = "rgb(" + c.getRed() * 100 + "," + c.getGreen() * 100 + "," + c.getBlue() * 100 + ")";
-        r.setStyle("-fx-fill:linear-gradient(" + cs1 + ", " + cs2 + ");");
-        r.setArcHeight(10);
-        r.setArcWidth(10);
-        r.setId(get.getPid());
-
-        r.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2) {
-                if (showing.equals("")) {
-                    showing = r.getId();
-                } else {
-                    showing = "";
+        
+        if (!get.getPid().equals("none")) {
+            //add the Rectangle
+            final Rectangle r = new Rectangle(currentX, 25, get.getDuration() * 20 - 1, 40);
+            Color c = processColors.get(get.getPid());
+            String cs1 = "rgb(" + c.getRed() * 255 + "," + c.getGreen() * 255 + "," + c.getBlue() * 255 + ")";
+            String cs2 = "rgb(" + c.getRed() * 100 + "," + c.getGreen() * 100 + "," + c.getBlue() * 100 + ")";
+            r.setStyle("-fx-fill:linear-gradient(" + cs1 + ", " + cs2 + ");");
+            r.setArcHeight(10);
+            r.setArcWidth(10);
+            r.setId(get.getPid());
+            
+            r.setOnMouseClicked(e -> {
+                if (e.getClickCount() == 2) {
+                    if (showing.equals("")) {
+                        showing = r.getId();
+                    } else {
+                        showing = "";
+                    }
+                    setVisibleProcess();
                 }
-                setVisibleProcess();
-            }
-        });
+            });
 
-        //adding tooltip
-        Tooltip t = new Tooltip("Process ID : " + get.getPid()
-                + "\nProcess Name : " + processNames.get(get.getPid())
-                + "\nDuration : " + get.getDuration()
-                + "\nRemainig : " + get.getRemain()
-                + "\nFinished : " + get.getFinished()
-                + "* double Click to filter");
-        Tooltip.install(r, t);
+            //adding tooltip
+            Tooltip t = new Tooltip("Process ID : " + get.getPid()
+                    + "\nProcess Name : " + processNames.get(get.getPid())
+                    + "\nDuration : " + get.getDuration()
+                    + "\nRemainig : " + get.getRemain()
+                    + "\nFinished : " + get.getFinished()
+                    + "* double Click to filter");
+            Tooltip.install(r, t);
+            
+            lblPane.getChildren().add(r);
+        }
 
-        lblPane.getChildren().add(r);
-
-        currentID++;
+        
         //set the Pane with and increase x-axis length
         currentX += get.getDuration() * 20;
 
@@ -267,6 +270,7 @@ public class FrmMainController extends Application implements Initializable {
         if (currentX > 260) {
             lineX.setEndX(lineX.getEndX() + get.getDuration() * 20);
         }
+        currentID++;
     }
 
     private void setVisibleProcess() {
